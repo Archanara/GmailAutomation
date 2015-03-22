@@ -4,15 +4,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import uk.page.CreateAccountPage;
 import uk.page.GmailHomePage;
 import uk.page.GoogleSearchPage;
 
-import java.io.File;
-import java.net.URISyntaxException;
 
 public class GmailAccountCreationTest {
 
@@ -20,14 +16,6 @@ public class GmailAccountCreationTest {
 
     @BeforeClass
     public static void setup() {
-
-//        try {
-//            System.setProperty("webdriver.chrome.driver", new File(ClassLoader.getSystemResource("driver/chrome/windows/chromedriver.exe").toURI()).getAbsolutePath());
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-
-
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
@@ -44,19 +32,13 @@ public class GmailAccountCreationTest {
 
         GoogleSearchPage googleSearchPage = new GoogleSearchPage(driver);
         assert googleSearchPage.isPageLoaded();
-
         GmailHomePage gmailHomePage = googleSearchPage.goToGmailHomePage();
         assert gmailHomePage.isPageLoaded();
-
         gmailHomePage.goToAccountCreatePage();
-
         CreateAccountPage createAccountPage = new CreateAccountPage(driver);
         createAccountPage.enterDetails();
-
+        createAccountPage.clickNext();
         assert createAccountPage.isUserNameErrVisible();
-
-
-
     }
 
 }
